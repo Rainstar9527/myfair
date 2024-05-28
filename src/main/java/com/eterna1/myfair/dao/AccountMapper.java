@@ -11,6 +11,8 @@ public interface AccountMapper {
 
     Account selectByPrimaryKey(Integer aid);
 
+    Account selectByNameAndPassword(Account record);
+
     int updateByPrimaryKeySelective(Account record);
 
     int updateByPrimaryKey(Account record);
