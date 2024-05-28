@@ -80,7 +80,7 @@
     where aid = #{aid,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByNameAndPassword" parameterType="com.eterna1.myfair.vo.Account">
+  <select id="selectByNameAndPassword" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Account">
     select
     <include refid="Base_Column_List" />
     from tb_account
