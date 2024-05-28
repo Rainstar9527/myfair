@@ -1,12 +1,12 @@
-package com.eterna1;
+package com.eterna1.myfair;
 
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Main {
+public class Starter {
     public static void main(String[] args) {
-        SpringApplication.run(Main.class,args);
+        SpringApplication.run(Starter.class,args);
     }
 }

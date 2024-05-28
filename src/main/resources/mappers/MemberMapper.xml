@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eterna1.myfair.dao.MemberMapper" >
+  <resultMap id="BaseResultMap" type="com.eterna1.myfair.vo.Member" >
+    <id column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="mcode" property="mcode" jdbcType="VARCHAR" />
+    <result column="mname" property="mname" jdbcType="VARCHAR" />
+    <result column="mphone" property="mphone" jdbcType="VARCHAR" />
+    <result column="mimage" property="mimage" jdbcType="VARCHAR" />
+    <result column="mjob" property="mjob" jdbcType="VARCHAR" />
+    <result column="mtype" property="mtype" jdbcType="INTEGER" />
+    <result column="fac_buy_id" property="facBuyId" jdbcType="INTEGER" />
+    <result column="mstate" property="mstate" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mid, mcode, mname, mphone, mimage, mjob, mtype, fac_buy_id, mstate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_member
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_member
+    where mid = #{mid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.eterna1.myfair.vo.Member" >
+    insert into tb_member (mid, mcode, mname, 
+      mphone, mimage, mjob, 
+      mtype, fac_buy_id, mstate
+      )
+    values (#{mid,jdbcType=INTEGER}, #{mcode,jdbcType=VARCHAR}, #{mname,jdbcType=VARCHAR}, 
+      #{mphone,jdbcType=VARCHAR}, #{mimage,jdbcType=VARCHAR}, #{mjob,jdbcType=VARCHAR}, 
+      #{mtype,jdbcType=INTEGER}, #{facBuyId,jdbcType=INTEGER}, #{mstate,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.eterna1.myfair.vo.Member" >
+    insert into tb_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="mcode != null" >
+        mcode,
+      </if>
+      <if test="mname != null" >
+        mname,
+      </if>
+      <if test="mphone != null" >
+        mphone,
+      </if>
+      <if test="mimage != null" >
+        mimage,
+      </if>
+      <if test="mjob != null" >
+        mjob,
+      </if>
+      <if test="mtype != null" >
+        mtype,
+      </if>
+      <if test="facBuyId != null" >
+        fac_buy_id,
+      </if>
+      <if test="mstate != null" >
+        mstate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="mcode != null" >
+        #{mcode,jdbcType=VARCHAR},
+      </if>
+      <if test="mname != null" >
+        #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="mphone != null" >
+        #{mphone,jdbcType=VARCHAR},
+      </if>
+      <if test="mimage != null" >
+        #{mimage,jdbcType=VARCHAR},
+      </if>
+      <if test="mjob != null" >
+        #{mjob,jdbcType=VARCHAR},
+      </if>
+      <if test="mtype != null" >
+        #{mtype,jdbcType=INTEGER},
+      </if>
+      <if test="facBuyId != null" >
+        #{facBuyId,jdbcType=INTEGER},
+      </if>
+      <if test="mstate != null" >
+        #{mstate,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eterna1.myfair.vo.Member" >
+    update tb_member
+    <set >
+      <if test="mcode != null" >
+        mcode = #{mcode,jdbcType=VARCHAR},
+      </if>
+      <if test="mname != null" >
+        mname = #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="mphone != null" >
+        mphone = #{mphone,jdbcType=VARCHAR},
+      </if>
+      <if test="mimage != null" >
+        mimage = #{mimage,jdbcType=VARCHAR},
+      </if>
+      <if test="mjob != null" >
+        mjob = #{mjob,jdbcType=VARCHAR},
+      </if>
+      <if test="mtype != null" >
+        mtype = #{mtype,jdbcType=INTEGER},
+      </if>
+      <if test="facBuyId != null" >
+        fac_buy_id = #{facBuyId,jdbcType=INTEGER},
+      </if>
+      <if test="mstate != null" >
+        mstate = #{mstate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eterna1.myfair.vo.Member" >
+    update tb_member
+    set mcode = #{mcode,jdbcType=VARCHAR},
+      mname = #{mname,jdbcType=VARCHAR},
+      mphone = #{mphone,jdbcType=VARCHAR},
+      mimage = #{mimage,jdbcType=VARCHAR},
+      mjob = #{mjob,jdbcType=VARCHAR},
+      mtype = #{mtype,jdbcType=INTEGER},
+      fac_buy_id = #{facBuyId,jdbcType=INTEGER},
+      mstate = #{mstate,jdbcType=INTEGER}
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+</mapper>
