@@ -26,7 +26,7 @@ public class AccountController {
             return "Error";
         } else
         {
-            return "ok";
+            return account.getAdminName() + ", 登录成功";
         }
     }
 }
