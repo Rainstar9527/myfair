@@ -47,7 +47,7 @@
 
 <div id="login-container">
     <h2>Login</h2>
-    <form action="/login" method="post">
+<!--    <form action="/login" method="post">-->
         <div class="form-input">
             <label for="adminName">Username</label>
             <input type="text" id="adminName" name="adminName" required v-model="username">
@@ -56,8 +56,8 @@
             <label for="adminPwd">Password</label>
             <input type="password" id="adminPwd" name="adminPwd" required v-model="password">
         </div>
-        <button type="submit" class="login-button">Login</button>
-    </form>
+        <button class="login-button" @click="submit()">Login</button>
+<!--    </form>-->
 </div>
 
 </body>
@@ -70,6 +70,14 @@
         data: {
             username: '',
             password: ''
+        },
+        methods:{
+            submit(){
+                var param = {'adminName':this.username, 'adminPwd':this.password}
+                axios.post("/login",param).then(response=>{
+                    alert(response.data)
+                })
+            }
         }
     })
 </script>
