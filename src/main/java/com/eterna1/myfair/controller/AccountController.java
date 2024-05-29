@@ -19,10 +19,10 @@ public class AccountController {
     public Result login(@RequestBody Account account)
     {
         Result result = new Result();
-        String pwd = Encrypt.getMD5(account.getAdminPwd());
-        account.setAdminPwd(pwd);
+//        String pwd = Encrypt.getMD5(account.getAdminPwd());
+//        account.setAdminPwd(pwd);
         Account loginAccount = accountService.selectByNameAndPassword(account);
-        if (loginAccount == null)
+        if (loginAccount != null)
         {
             result.setData(loginAccount);
             result.setFlag(true);

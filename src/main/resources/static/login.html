@@ -74,7 +74,7 @@
         },
         methods:{
             submit(){
-                var param = {'adminName': this.username, 'adminPwd': this.password}
+                var param = {adminName: this.username, adminPwd: this.password}
                 axios.post("/login",param).then(response=>{
                     if (response.data.flag==true)
                     {
@@ -86,7 +86,6 @@
                         this.$message({
                             message: response.data.message,
                             type: 'false'
-
                         })
                     }
                 })
