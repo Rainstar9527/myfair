@@ -63,6 +63,7 @@
 </body>
 <script src="js/vue.js"></script>
 <script src="js/axios.js"></script>
+<script src="js/index.js"></script>
 
 <script>
     var app = new Vue({
@@ -73,9 +74,20 @@
         },
         methods:{
             submit(){
-                var param = {'adminName':this.username, 'adminPwd':this.password}
+                var param = {'adminName': this.username, 'adminPwd': this.password}
                 axios.post("/login",param).then(response=>{
-                    alert(response.data)
+                    if (response.data.flag==true)
+                    {
+                        this.$message({
+                            message: response.data.data,
+                            type: 'success'
+                        })
+                    }else {
+                        this.$message({
+                            message: response.data.message,
+                            type: 'false'
+                        })
+                    }
                 })
             }
         }
