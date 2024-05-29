@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
         }
-        .login-container {
+        #login-container {
             max-width: 300px;
             margin: 50px auto;
             padding: 20px;
@@ -41,23 +41,37 @@
             background-color: #0056b3;
         }
     </style>
+
 </head>
 <body>
 
-<div class="login-container">
+<div id="login-container">
     <h2>Login</h2>
     <form action="/login" method="post">
         <div class="form-input">
             <label for="adminName">Username</label>
-            <input type="text" id="adminName" name="adminName" required>
+            <input type="text" id="adminName" name="adminName" required v-model="username">
         </div>
         <div class="form-input">
             <label for="adminPwd">Password</label>
-            <input type="password" id="adminPwd" name="adminPwd" required>
+            <input type="password" id="adminPwd" name="adminPwd" required v-model="password">
         </div>
         <button type="submit" class="login-button">Login</button>
     </form>
 </div>
 
 </body>
+<script src="js/vue.js"></script>
+<script src="js/axios.js"></script>
+
+<script>
+    var app = new Vue({
+        el: '#login-container',
+        data: {
+            username: '',
+            password: ''
+        }
+    })
+</script>
+
 </html>

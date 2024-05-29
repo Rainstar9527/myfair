@@ -1,10 +1,11 @@
 package com.eterna1.myfair.controller;
 
+import com.eterna1.myfair.common.Result;
 import com.eterna1.myfair.service.AccountService;
+import com.eterna1.myfair.utils.Encrypt;
 import com.eterna1.myfair.vo.Account;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AccountController {
@@ -14,19 +15,23 @@ public class AccountController {
 
     //请求与响应
     //登录请求的处理方法
-    @RequestMapping("/login")
-    public String login(String adminName, String adminPwd)
+    @PostMapping("/login")
+    public Result login(@RequestBody Account account)
     {
-        Account account = new Account();
-        account.setAdminName(adminName);
-        account.setAdminPwd(adminPwd);
+        Result result = new Result();
+        String pwd = Encrypt.getMD5(account.getAdminPwd());
+        account.setAdminPwd(pwd);
         Account loginAccount = accountService.selectByNameAndPassword(account);
         if (loginAccount == null)
         {
-            return "Error";
+            result.setData(loginAccount);
+            result.setFlag(true);
+            result.setMessage("success");
         } else
         {
-            return account.getAdminName() + ", 登录成功";
+            result.setFlag(false);
+            result.setMessage("error");
         }
+        return result;
     }
 }
