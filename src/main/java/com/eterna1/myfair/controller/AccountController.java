@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class AccountController {
     //1.获取dao层对象
     @Autowired
@@ -16,6 +17,7 @@ public class AccountController {
     //请求与响应
     //登录请求的处理方法
     @PostMapping("/login")
+    @CrossOrigin(origins = "*")
     public Result login(@RequestBody Account account)
     {
         Result result = new Result();

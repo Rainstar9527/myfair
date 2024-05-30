@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eterna1.myfair.dao.FactoryMapper" >
+  <resultMap id="BaseResultMap" type="com.eterna1.myfair.vo.Factory" >
+    <id column="fac_id" property="facId" jdbcType="INTEGER" />
+    <result column="fac_name" property="facName" jdbcType="VARCHAR" />
+    <result column="fac_desc" property="facDesc" jdbcType="VARCHAR" />
+    <result column="fac_address" property="facAddress" jdbcType="VARCHAR" />
+    <result column="fac_phone" property="facPhone" jdbcType="VARCHAR" />
+    <result column="fac_logo" property="facLogo" jdbcType="VARCHAR" />
+    <result column="fac_state" property="facState" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    fac_id, fac_name, fac_desc, fac_address, fac_phone, fac_logo, fac_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_factory
+    where fac_id = #{facId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_factory
+    where fac_id = #{facId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.eterna1.myfair.vo.Factory" >
+    insert into tb_factory (fac_id, fac_name, fac_desc, 
+      fac_address, fac_phone, fac_logo, 
+      fac_state)
+    values (#{facId,jdbcType=INTEGER}, #{facName,jdbcType=VARCHAR}, #{facDesc,jdbcType=VARCHAR}, 
+      #{facAddress,jdbcType=VARCHAR}, #{facPhone,jdbcType=VARCHAR}, #{facLogo,jdbcType=VARCHAR}, 
+      #{facState,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.eterna1.myfair.vo.Factory" >
+    insert into tb_factory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="facId != null" >
+        fac_id,
+      </if>
+      <if test="facName != null" >
+        fac_name,
+      </if>
+      <if test="facDesc != null" >
+        fac_desc,
+      </if>
+      <if test="facAddress != null" >
+        fac_address,
+      </if>
+      <if test="facPhone != null" >
+        fac_phone,
+      </if>
+      <if test="facLogo != null" >
+        fac_logo,
+      </if>
+      <if test="facState != null" >
+        fac_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="facId != null" >
+        #{facId,jdbcType=INTEGER},
+      </if>
+      <if test="facName != null" >
+        #{facName,jdbcType=VARCHAR},
+      </if>
+      <if test="facDesc != null" >
+        #{facDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="facAddress != null" >
+        #{facAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="facPhone != null" >
+        #{facPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="facLogo != null" >
+        #{facLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="facState != null" >
+        #{facState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eterna1.myfair.vo.Factory" >
+    update tb_factory
+    <set >
+      <if test="facName != null" >
+        fac_name = #{facName,jdbcType=VARCHAR},
+      </if>
+      <if test="facDesc != null" >
+        fac_desc = #{facDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="facAddress != null" >
+        fac_address = #{facAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="facPhone != null" >
+        fac_phone = #{facPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="facLogo != null" >
+        fac_logo = #{facLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="facState != null" >
+        fac_state = #{facState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where fac_id = #{facId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eterna1.myfair.vo.Factory" >
+    update tb_factory
+    set fac_name = #{facName,jdbcType=VARCHAR},
+      fac_desc = #{facDesc,jdbcType=VARCHAR},
+      fac_address = #{facAddress,jdbcType=VARCHAR},
+      fac_phone = #{facPhone,jdbcType=VARCHAR},
+      fac_logo = #{facLogo,jdbcType=VARCHAR},
+      fac_state = #{facState,jdbcType=INTEGER}
+    where fac_id = #{facId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.common.QueryPageEntity">
+    select * from tb_factory
+    <if test="queryString != null and queryString != ''">
+      where fac_name like concat('%',#{queryString},'%') or fac_desc like concat('%',#{queryString}, '%')
+    </if>
+    limit #{(currentPage-1)*pageSize},#{pageSize}}
+  </select>
+  <select id="selectAllFactory" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Factory">
+    select
+    <include refid="Base_Column_List" />
+    from tb_factory
+  </select>
+</mapper>
