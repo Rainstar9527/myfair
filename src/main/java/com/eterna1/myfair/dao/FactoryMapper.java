@@ -18,6 +18,12 @@ public interface FactoryMapper {
 
     List<Factory> selectAllFactory();
 
+    List<Factory> searchFacByName(String facName);
+
+    List<Factory> searchFacByPhone(String facPhone);
+
+    List<Factory> searchFacByType(String facDesc);
+
     int updateByPrimaryKeySelective(Factory record);
 
     int updateByPrimaryKey(Factory record);

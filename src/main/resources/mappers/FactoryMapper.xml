@@ -126,4 +126,23 @@
     <include refid="Base_Column_List" />
     from tb_factory
   </select>
+  <select id="searchFacByName" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Factory">
+    select
+    <include refid="Base_Column_List" />
+    from tb_factory
+    where fac_name like '%${facName,jdbcType=VARCHAR}%'
+  </select>
+  <select id="searchFacByPhone" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Factory">
+    select
+    <include refid="Base_Column_List" />
+    from tb_factory
+    where fac_phone = #{facPhone,jdbcType=VARCHAR}
+  </select>
+  <select id="searchFacByType" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Factory">
+    select
+    <include refid="Base_Column_List" />
+    from tb_factory
+    where fac_desc like '%${facDesc,jdbcType=VARCHAR}%'
+  </select>
+
 </mapper>

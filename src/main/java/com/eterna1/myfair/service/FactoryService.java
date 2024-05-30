@@ -9,4 +9,6 @@ public interface FactoryService {
     List<Factory> selectByPage(QueryPageEntity queryPageEntity);
 
     List<Factory> selectAllFactory();
+
+    List<Factory> searchFactory(String selection, String inputString);
 }

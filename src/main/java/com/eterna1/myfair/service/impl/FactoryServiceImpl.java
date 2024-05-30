@@ -21,8 +21,21 @@ public class FactoryServiceImpl implements FactoryService {
     }
 
     @Override
-    public  List<Factory> selectAllFactory()
+    public List<Factory> selectAllFactory()
     {
         return factoryMapper.selectAllFactory();
+    }
+
+    @Override
+    public List<Factory> searchFactory(String selection, String inputString) {
+        switch (selection){
+            case "1":
+                return factoryMapper.searchFacByName(inputString);
+            case "2":
+                return factoryMapper.searchFacByPhone(inputString);
+            case "3":
+                return factoryMapper.searchFacByType(inputString);
+        }
+        return null;
     }
 }
