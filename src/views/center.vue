@@ -40,7 +40,7 @@
       <el-main>
         <router-view></router-view>
       </el-main>
-      <el-footer>Footer</el-footer>
+      <el-footer>https://github.com/Rainstar9527/myfair</el-footer>
     </el-container>
   </el-container>
 </template>

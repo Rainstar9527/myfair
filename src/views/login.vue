@@ -60,7 +60,7 @@ import url from 'postcss-url';
                     message: response.data.message,
                     type: 'success'
                 });
-                setTimeout("window.location.href='http://localhost:8080/#/center'",3000)
+                setTimeout("window.location.href='http://localhost:8080/#/center'",1000)
             }else {
                 this.$message.error(response.data.message);
             }
