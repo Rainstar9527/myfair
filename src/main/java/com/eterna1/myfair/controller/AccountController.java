@@ -17,7 +17,6 @@ public class AccountController {
     //请求与响应
     //登录请求的处理方法
     @PostMapping("/login")
-    @CrossOrigin(origins = "*")
     public Result login(@RequestBody Account account)
     {
         Result result = new Result();

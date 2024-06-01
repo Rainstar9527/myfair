@@ -3,10 +3,15 @@ package com.eterna1.myfair.controller;
 import com.eterna1.myfair.common.QueryPageEntity;
 import com.eterna1.myfair.common.Result;
 import com.eterna1.myfair.service.FactoryService;
+import com.eterna1.myfair.utils.PicUpload;
 import com.eterna1.myfair.vo.Factory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +20,8 @@ import java.util.Map;
 public class FactoryController {
     @Autowired
     FactoryService factoryService;
+    @Autowired
+    PicUpload picUpload;
 //    @PostMapping("/getByPage")
 //    public Result selectByPage(@RequestBody QueryPageEntity queryPageEntity) {
 //        Result result = new Result();
@@ -24,6 +31,12 @@ public class FactoryController {
 //        result.setData(factories);
 //        return result;
 //    }
+
+    @Value("${pictureFile.path}")
+    private String picturePath;
+
+    @Value("${pictureFile.path-mapping}")
+    private String picturePathMapping;
 
     @RequestMapping("/getAllFactory")
     public Result selectAllFactory()
@@ -48,6 +61,17 @@ public class FactoryController {
         result.setData(factories);
         result.setMessage("ok");
 
+        return result;
+    }
+
+    @PostMapping("/addFactory")
+    public Result addFactory(@RequestBody Factory factory){
+        return null;
+    }
+
+    @RequestMapping("/addImg")
+    public Result addImage(MultipartFile file) throws IOException {
+        Result result = picUpload.imgUpload(file);
         return result;
     }
 }
