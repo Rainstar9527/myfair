@@ -1,8 +1,8 @@
 <template>
     <el-card class="box-card">
-      <!-- 表格 -->
-      <el-head>
-        <div style="margin: 15px;">
+      <el-header style="display: flex;">
+        <!-- 搜索 -->
+        <div style="margin: 15px; width: 90%;">
           <el-input placeholder="请输入内容" v-model="input" class="input-with-select">
             <el-select v-model="select" slot="prepend" placeholder="请选择">
               <el-option label="公司名" value="1"></el-option>
@@ -12,7 +12,57 @@
             <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
           </el-input>
         </div>
-      </el-head>
+
+        <!-- Dialog 对话框 弹出新增和修改表单 -->
+        <el-row style="margin: auto;">
+          <el-button size="mini" type="primary" @click="add">新增</el-button>
+          <el-dialog :title="title" :visible.sync="dialogFormVisible" width="30%">
+            <el-form :model="form" :rules="rules" ref="form">
+              <el-form-item label="id:" hidden>
+                <el-input v-model="form.id"></el-input>
+              </el-form-item>
+              <el-form-item label="名称:" prop="facName">
+                <el-input v-model="form.facName" placeholder="请输入厂商名称" style="width:80%"></el-input>
+              </el-form-item>
+              <el-form-item label="类型:" prop="facDesc">
+                <el-input v-model="form.facDesc" placeholder="请输入厂商类型" style="width:80%"></el-input>
+              </el-form-item>
+              <el-form-item label="地址:" prop="facAddress">
+                <el-input v-model="form.facAddress" placeholder="请输入厂商地址" style="width:80%"></el-input>
+              </el-form-item>
+              <el-form-item label="电话:" prop="facPhone">
+                <el-input v-model="form.facPhone" placeholder="请输入厂商电话" style="width:80%"></el-input>
+              </el-form-item>
+              <el-form-item label="上传图片"  prop="imageUrl">
+                <el-upload
+                  class="upload-demo"
+                  action="http://localhost:9090/addImg"
+                  :on-success="handleSuccess"
+                  multiple
+                  :limit="1"
+                  :file-list="fileList">
+                  <el-button size="small" type="primary" >点击上传</el-button>
+                </el-upload>
+                <img v-if="imageUrl!==''" :src="imageUrl" style="width: 25%; height: 25%; margin-top: 10px">
+              </el-form-item>
+              <el-form-item label="状态:" prop="facState">
+                <el-radio-group v-model="radio" style="width:80%">
+                  <el-radio :label="0">正常</el-radio>
+                  <el-radio :label="1">注销</el-radio>
+                  <el-radio :label="2">退出</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="submit()">提 交</el-button>
+            </div>
+          </el-dialog>
+        </el-row>
+
+      </el-header>
+
+      <!-- 表格 -->
       <el-table
         :data="tableData"
         style="width: 100%">
@@ -63,6 +113,7 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 分页 -->
       <el-row>
         <el-pagination
           @size-change="handleSizeChange"
@@ -82,15 +133,23 @@
   <script>
 
     export default {
-      name: "student",
+      name: "factory",
       data() {
         return {
-          name: '',
-          title: '',
           //增删
+          title: '',
           currentRow: null,
           dialogFormVisible: false,
           form: {},
+          fileList: [],
+          imageUrl: '',
+          radio: 0,
+          rules: {
+            facName: [{required: true, message: '请输入名称', trigger: 'blur'}],
+            facDesc: [{required: true, message: '请输入类型', trigger: 'blur'}],
+            facAddress: [{required: true, message: '请输入地址', trigger: 'blur'}],
+            facPhone: [{required: true, message: '请输入电话', trigger: 'blur'}]
+          },
           //分页相关
           total: 0,
           AllData: [],
@@ -141,7 +200,6 @@
 
         //搜索相关
         search(){
-          var param = {}
           this.$axios({
             method: 'post',
             url: 'http://localhost:9090/searchFactory',
@@ -154,8 +212,70 @@
             this.total = response.data.data.length;            
             this.getPageInfo();
           })
-        }
+        },
+
+        // 新增
+        // 表单重置初始化
+        reset() {
+          this.form = {
+            id: null,
+            name: null,
+            age: null,
+            gender: null,
+            email: null
+          }
+        },
+        add(){
+          this.reset()
+          this.dialogFormVisible=true
+          this.title="新增厂商数据"
+        },
+        handleSuccess(response, file) {
+            this.imageUrl = URL.createObjectURL(file.raw);
+        },
+
+      //提交按钮
+      submit() {
+        this.$refs['form'].validate((valid) => {
+          if (valid) {
+            if (this.form.id == null) {
+              this.$axios({
+                method: 'post',
+                data: this.form,
+                url: 'http://localhost:9090/student/add',
+              }).then((response) => {
+                this.$message({
+                  message: '新增成功!',
+                  type: 'success'
+                });
+                this.dialogFormVisible = false
+                this.getList();
+              }).catch((error) => {
+              })
+            } else {
+              this.$axios({
+                method: 'post',
+                data: this.form,
+                url: 'http://localhost:9090/student/edit',
+              }).then((response) => {
+                this.$message({
+                  message: '修改成功!',
+                  type: 'success'
+                });
+                this.getList();
+                this.dialogFormVisible = false
+              }).catch((error) => {
+              })
+            }
+          } else {
+            return false;
+          }
+        })
+      }
       },
+
+
+
       mounted() {
         this.getList();
       }
@@ -166,5 +286,6 @@
     .el-select .el-input {
       width: 130px;
     }
+
 
   </style>

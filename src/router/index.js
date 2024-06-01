@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import login from '@/views/login'
 import center from '@/views/center'
+import img from '../views/img.vue'
 
 import factory from '@/views/factory.vue'
 
@@ -27,7 +28,11 @@ export default new Router({
         }
       ]
     },
-
+    {
+      path: '/img',
+      name: 'img',
+      component: img
+    },
     {
       path: '/',
       name: 'HelloWorld',
