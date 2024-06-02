@@ -25,7 +25,7 @@
                 <el-input v-model="form.facName" placeholder="请输入厂商名称" style="width:80%"></el-input>
               </el-form-item>
               <el-form-item label="类型:" prop="facDesc">
-                <el-input v-model="form.facDesc" placeholder="请输入厂商类型" style="width:80%"></el-input>
+                <el-input v-model="form.facDesc" placeholder="请输入厂商描述" style="width:80%"></el-input>
               </el-form-item>
               <el-form-item label="地址:" prop="facAddress">
                 <el-input v-model="form.facAddress" placeholder="请输入厂商地址" style="width:80%"></el-input>
@@ -65,7 +65,8 @@
       <!-- 表格 -->
       <el-table
         :data="tableData"
-        style="width: 100%">
+        style="width: 100%"
+        :row-class-name="tableRowClassName">
         <el-table-column
           type="selection"
           width="55">
@@ -79,7 +80,7 @@
         <el-table-column
           property="facName"
           label="名称"
-          width="120"
+          width="250"
           align="center">
 
           <template slot-scope="scope">
@@ -108,13 +109,25 @@
         <el-table-column
           property="facAddress"
           label="地址"
-          width="120"
+          width="250"
           align="center">
         </el-table-column>
         <el-table-column
           property="facPhone"
           label="电话"
           align="center">
+        </el-table-column>
+        <el-table-column
+          property="facState"
+          label="状态"
+          align="center">
+
+          <template slot-scope="scope">
+            <p v-if="scope.row.facState === 0">正常</p>
+            <p v-else-if="scope.row.facState === 1">注销</p>
+            <p v-else-if="scope.row.facState === 2">退出</p>
+          </template>
+
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
@@ -131,7 +144,7 @@
         </el-table-column>
       </el-table>
       <!-- 分页 -->
-      <el-row>
+      <el-row style="margin-top: 20px;">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -200,7 +213,17 @@
             if(this.tableData.length===this.pagesize) break;
           }
         },
-            //分页时修改每页的行数,这里会自动传入一个size
+        tableRowClassName({row, rowIndex}){
+          if(row.facState === 1)
+          {
+            return 'warning-row';
+          }else if (row.facState === 2)
+          {
+            return 'exit-row';
+          }
+          return '';
+        },
+        //分页时修改每页的行数,这里会自动传入一个size
         handleSizeChange(size){
           //修改当前每页的数据行数
           this.pagesize=size;
@@ -236,11 +259,12 @@
         reset() {
           this.form = {
             id: null,
-            name: null,
-            age: null,
-            gender: null,
-            email: null
-          }
+            facName: null,
+            facDesc: null,
+            facAddress: null,
+            facPhone: null,
+          },
+          this.imageUrl = ''
         },
         add(){
           this.reset()
@@ -323,6 +347,12 @@
     .el-select .el-input {
       width: 130px;
     }
+    .el-table .warning-row {
+    background: #FFEFD5;
+    }
 
+    .el-table .exit-row {
+      background:#FFC1C1;
+    }
 
   </style>

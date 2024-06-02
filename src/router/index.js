@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import login from '@/views/login'
 import center from '@/views/center'
 import img from '../views/img.vue'
+import buyer from '../views/buyer.vue'
 
 import factory from '@/views/factory.vue'
 
@@ -22,9 +23,14 @@ export default new Router({
       component: center,
       children:[
         {
-          path: '/factory',
+          path: '/center/factory',
           name: 'factory',
           component: factory
+        },
+        {
+          path: '/center/buyer',
+          name: 'buyer',
+          component: buyer
         }
       ]
     },
@@ -37,6 +43,7 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
-    }
+    },
+    
   ]
 })

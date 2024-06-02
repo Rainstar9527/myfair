@@ -17,11 +17,11 @@
             <span slot="title">后台管理</span>
           </template>
           <!--  二级标题 -->
-            <el-menu-item index="/factory">
+            <el-menu-item index="/center/factory">
               <i class="el-icon-setting"></i>
               <span slot="title">厂商管理</span>
             </el-menu-item>
-            <el-menu-item index="/">
+            <el-menu-item index="/center/buyer">
               <i class="el-icon-setting"></i>
               <span slot="title">采购商管理</span>
             </el-menu-item>
