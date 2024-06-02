@@ -42,4 +42,9 @@ public class FactoryServiceImpl implements FactoryService {
         }
         return null;
     }
+
+    @Override
+    public void insertSelective(Factory factory) {
+        factoryMapper.insertSelective(factory);
+    }
 }

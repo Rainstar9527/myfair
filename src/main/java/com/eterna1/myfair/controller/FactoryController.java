@@ -32,12 +32,6 @@ public class FactoryController {
 //        return result;
 //    }
 
-    @Value("${pictureFile.path}")
-    private String picturePath;
-
-    @Value("${pictureFile.path-mapping}")
-    private String picturePathMapping;
-
     @RequestMapping("/getAllFactory")
     public Result selectAllFactory()
     {
@@ -65,8 +59,12 @@ public class FactoryController {
     }
 
     @PostMapping("/addFactory")
-    public Result addFactory(@RequestBody Factory factory){
-        return null;
+    public Result addFactory(@RequestBody Factory factory) {
+        Result result = new Result();
+        factoryService.insertSelective(factory);
+        result.setFlag(true);
+        result.setMessage("success");
+        return result;
     }
 
     @RequestMapping("/addImg")

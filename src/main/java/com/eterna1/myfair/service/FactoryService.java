@@ -13,4 +13,5 @@ public interface FactoryService {
 
     List<Factory> searchFactory(String selection, String inputString);
 
+    void insertSelective(Factory factory);
 }
