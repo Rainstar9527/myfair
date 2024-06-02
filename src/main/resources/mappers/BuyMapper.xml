@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eterna1.myfair.dao.BuyMapper" >
+  <resultMap id="BaseResultMap" type="com.eterna1.myfair.vo.Buy" >
+    <id column="buy_id" property="buyId" jdbcType="INTEGER" />
+    <result column="buy_name" property="buyName" jdbcType="VARCHAR" />
+    <result column="buy_desc" property="buyDesc" jdbcType="VARCHAR" />
+    <result column="buy_logo" property="buyLogo" jdbcType="VARCHAR" />
+    <result column="buy_address" property="buyAddress" jdbcType="VARCHAR" />
+    <result column="buy_state" property="buyState" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    buy_id, buy_name, buy_desc, buy_logo, buy_address, buy_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_buy
+    where buy_id = #{buyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_buy
+    where buy_id = #{buyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.eterna1.myfair.vo.Buy" >
+    insert into tb_buy (buy_id, buy_name, buy_desc, 
+      buy_logo, buy_address, buy_state
+      )
+    values (#{buyId,jdbcType=INTEGER}, #{buyName,jdbcType=VARCHAR}, #{buyDesc,jdbcType=VARCHAR}, 
+      #{buyLogo,jdbcType=VARCHAR}, #{buyAddress,jdbcType=VARCHAR}, #{buyState,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.eterna1.myfair.vo.Buy" >
+    insert into tb_buy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="buyId != null" >
+        buy_id,
+      </if>
+      <if test="buyName != null" >
+        buy_name,
+      </if>
+      <if test="buyDesc != null" >
+        buy_desc,
+      </if>
+      <if test="buyLogo != null" >
+        buy_logo,
+      </if>
+      <if test="buyAddress != null" >
+        buy_address,
+      </if>
+      <if test="buyState != null" >
+        buy_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="buyId != null" >
+        #{buyId,jdbcType=INTEGER},
+      </if>
+      <if test="buyName != null" >
+        #{buyName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyDesc != null" >
+        #{buyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="buyLogo != null" >
+        #{buyLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="buyAddress != null" >
+        #{buyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="buyState != null" >
+        #{buyState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eterna1.myfair.vo.Buy" >
+    update tb_buy
+    <set >
+      <if test="buyName != null" >
+        buy_name = #{buyName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyDesc != null" >
+        buy_desc = #{buyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="buyLogo != null" >
+        buy_logo = #{buyLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="buyAddress != null" >
+        buy_address = #{buyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="buyState != null" >
+        buy_state = #{buyState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where buy_id = #{buyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eterna1.myfair.vo.Buy" >
+    update tb_buy
+    set buy_name = #{buyName,jdbcType=VARCHAR},
+      buy_desc = #{buyDesc,jdbcType=VARCHAR},
+      buy_logo = #{buyLogo,jdbcType=VARCHAR},
+      buy_address = #{buyAddress,jdbcType=VARCHAR},
+      buy_state = #{buyState,jdbcType=INTEGER}
+    where buy_id = #{buyId,jdbcType=INTEGER}
+  </update>
+  <select id="selectAllBuy" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Buy">
+    select * from tb_buy
+  </select>
+  <select id="searchBuyByName" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Buy">
+    select
+    <include refid="Base_Column_List" />
+    from tb_buy
+    where buy_name like '%${buyName,jdbcType=VARCHAR}%'
+  </select>
+  <select id="searchBuyByAddress" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Buy">
+    select
+    <include refid="Base_Column_List" />
+    from tb_buy
+    where buy_address like '%${buyAddress,jdbcType=VARCHAR}%'
+  </select>
+</mapper>

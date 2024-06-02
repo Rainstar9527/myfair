@@ -75,10 +75,4 @@ public class FactoryController {
         result.setMessage("success");
         return result;
     }
-
-    @RequestMapping("/addImg")
-    public Result addImage(MultipartFile file) throws IOException {
-        Result result = picUpload.imgUpload(file);
-        return result;
-    }
 }
