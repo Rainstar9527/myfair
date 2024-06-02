@@ -15,7 +15,7 @@
 
         <!-- Dialog 对话框 弹出新增和修改表单 -->
         <el-row style="margin: auto;">
-          <el-button size="mini" type="primary" @click="add">新增</el-button>
+          <el-button size="mini" type="primary" @click="add()">新增</el-button>
           <el-dialog :title="title" :visible.sync="dialogFormVisible" width="30%">
             <el-form :model="form" :rules="rules" ref="form">
               <el-form-item label="id:" hidden>
@@ -81,6 +81,16 @@
           label="名称"
           width="120"
           align="center">
+
+          <template slot-scope="scope">
+            <el-popover trigger="hover" placement="top" style="width: 100px; height: 100px;">
+              <img v-if="scope.row.facLogo!==''" :src="'http://localhost:9090/'+scope.row.facLogo" style="width: 100%; height: 150px;">
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">{{ scope.row.facName }}</el-tag>
+              </div>
+            </el-popover>
+          </template>
+
         </el-table-column>
         <el-table-column
           property="facDesc"
@@ -105,11 +115,11 @@
               size="mini"
               @click="edit(scope.$index, scope.row)">编辑
             </el-button>
-            <el-button
+            <!-- <el-button
               size="mini"
               type="danger"
               @click="remove(scope.$index, scope.row)">删除
-            </el-button>
+            </el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -235,42 +245,35 @@
           this.imageUrl = response.data
         },
 
+        edit(index, row){
+          this.reset()
+          this.form = JSON.parse(JSON.stringify(row));
+          this.dialogFormVisible = true
+          this.title="新增厂商数据"
+        },
+
       //提交按钮
         submit() {
-          this.$refs['form'].validate((valid) => {
-            if (valid) {
-              if (this.form.id == null) {
-                this.$axios({
-                  method: 'post',
-                  data: this.form,
-                  url: 'http://localhost:9090/student/add',
-                }).then((response) => {
-                  this.$message({
-                    message: '新增成功!',
-                    type: 'success'
-                  });
-                  this.dialogFormVisible = false
-                  this.getList();
-                }).catch((error) => {
-                })
-              } else {
-                this.$axios({
-                  method: 'post',
-                  data: this.form,
-                  url: 'http://localhost:9090/student/edit',
-                }).then((response) => {
-                  this.$message({
-                    message: '修改成功!',
-                    type: 'success'
-                  });
-                  this.getList();
-                  this.dialogFormVisible = false
-                }).catch((error) => {
-                })
-              }
-            } else {
-              return false;
-            }
+          var param = {
+            facId: '',
+            facName: this.form.facName,
+            facDesc: this.form.facDesc,
+            facAddress: this.form.facAddress,
+            facPhone: this.form.facPhone,
+            facLogo: this.imageUrl,
+            facState: this.radio
+          }
+          this.$axios({
+            method: 'post',
+            url: 'http://localhost:9090/addFactory',
+            data: param
+          }).then(response=>{
+            this.$message({
+              message: response.data.message,
+              type: 'success'
+            });
+            this.getList();
+            this.dialogFormVisible=false
           })
         }
       },
