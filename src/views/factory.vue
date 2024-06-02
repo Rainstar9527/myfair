@@ -42,8 +42,8 @@
                   :limit="1"
                   :file-list="fileList">
                   <el-button size="small" type="primary" >点击上传</el-button>
-                </el-upload>
-                <img v-if="imageUrl!==''" :src="imageUrl" style="width: 25%; height: 25%; margin-top: 10px">
+                </el-upload> 
+                <img v-if="imageUrl!==''" :src="'http://localhost:9090/'+imageUrl" style="width: 25%; height: 25%; margin-top: 10px">
               </el-form-item>
               <el-form-item label="状态:" prop="facState">
                 <el-radio-group v-model="radio" style="width:80%">
@@ -231,47 +231,48 @@
           this.title="新增厂商数据"
         },
         handleSuccess(response, file) {
-            this.imageUrl = URL.createObjectURL(file.raw);
+          console.log(response.data)
+          this.imageUrl = response.data
         },
 
       //提交按钮
-      submit() {
-        this.$refs['form'].validate((valid) => {
-          if (valid) {
-            if (this.form.id == null) {
-              this.$axios({
-                method: 'post',
-                data: this.form,
-                url: 'http://localhost:9090/student/add',
-              }).then((response) => {
-                this.$message({
-                  message: '新增成功!',
-                  type: 'success'
-                });
-                this.dialogFormVisible = false
-                this.getList();
-              }).catch((error) => {
-              })
+        submit() {
+          this.$refs['form'].validate((valid) => {
+            if (valid) {
+              if (this.form.id == null) {
+                this.$axios({
+                  method: 'post',
+                  data: this.form,
+                  url: 'http://localhost:9090/student/add',
+                }).then((response) => {
+                  this.$message({
+                    message: '新增成功!',
+                    type: 'success'
+                  });
+                  this.dialogFormVisible = false
+                  this.getList();
+                }).catch((error) => {
+                })
+              } else {
+                this.$axios({
+                  method: 'post',
+                  data: this.form,
+                  url: 'http://localhost:9090/student/edit',
+                }).then((response) => {
+                  this.$message({
+                    message: '修改成功!',
+                    type: 'success'
+                  });
+                  this.getList();
+                  this.dialogFormVisible = false
+                }).catch((error) => {
+                })
+              }
             } else {
-              this.$axios({
-                method: 'post',
-                data: this.form,
-                url: 'http://localhost:9090/student/edit',
-              }).then((response) => {
-                this.$message({
-                  message: '修改成功!',
-                  type: 'success'
-                });
-                this.getList();
-                this.dialogFormVisible = false
-              }).catch((error) => {
-              })
+              return false;
             }
-          } else {
-            return false;
-          }
-        })
-      }
+          })
+        }
       },
 
 

@@ -4,7 +4,7 @@
           <el-upload
                   class="upload-demo"
                   ref="upload"
-                  action="http://localhost:9090/addimg"
+                  action="http://localhost:9090/addImg"
                   :on-success="handleSuccess"
                   multiple
                   :file-list="fileList">
@@ -30,8 +30,9 @@ export default {
         }
     },
     methods: {
-        handleSuccess(res, file) {
-            this.imageUrl = URL.createObjectURL(file.raw);
+        handleSuccess(response, file) {
+            console.log(response.data)
+            this.imageUrl = response.data
         },
         submitUpload() {
             this.$refs.upload.submit();
