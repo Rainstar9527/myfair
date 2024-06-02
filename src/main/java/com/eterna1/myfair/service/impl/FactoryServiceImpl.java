@@ -47,4 +47,9 @@ public class FactoryServiceImpl implements FactoryService {
     public void insertSelective(Factory factory) {
         factoryMapper.insertSelective(factory);
     }
+
+    @Override
+    public void updateByPrimaryKey(Factory factory) {
+        factoryMapper.updateByPrimaryKey(factory);
+    }
 }

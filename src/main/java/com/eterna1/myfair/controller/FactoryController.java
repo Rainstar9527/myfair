@@ -67,6 +67,15 @@ public class FactoryController {
         return result;
     }
 
+    @PostMapping("/editFactory")
+    public Result editFactory(@RequestBody Factory factory){
+        Result result = new Result();
+        factoryService.updateByPrimaryKey(factory);
+        result.setFlag(true);
+        result.setMessage("success");
+        return result;
+    }
+
     @RequestMapping("/addImg")
     public Result addImage(MultipartFile file) throws IOException {
         Result result = picUpload.imgUpload(file);
