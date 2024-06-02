@@ -99,6 +99,13 @@
           align="center">
         </el-table-column>
         <el-table-column
+          property="facLogo"
+          label="logo"
+          width="120"
+          align="center"
+          v-if="false">
+        </el-table-column>
+        <el-table-column
           property="facAddress"
           label="地址"
           width="120"
@@ -248,13 +255,15 @@
         edit(index, row){
           this.reset()
           this.form = JSON.parse(JSON.stringify(row));
+          this.imageUrl = this.form.facLogo
           this.dialogFormVisible = true
           this.title="新增厂商数据"
         },
 
       //提交按钮
         submit() {
-          var param = {
+          if (this.form.facId == null) {
+            var param = {
             facId: '',
             facName: this.form.facName,
             facDesc: this.form.facDesc,
@@ -262,19 +271,43 @@
             facPhone: this.form.facPhone,
             facLogo: this.imageUrl,
             facState: this.radio
+            }
+            this.$axios({
+              method: 'post',
+              url: 'http://localhost:9090/addFactory',
+              data: param
+            }).then(response=>{
+              this.getList();
+              this.dialogFormVisible=false
+              this.$message({
+                message: response.data.message,
+                type: 'success'
+              });
+            })
+          }else {
+            var param = {
+            facId: this.form.facId,
+            facName: this.form.facName,
+            facDesc: this.form.facDesc,
+            facAddress: this.form.facAddress,
+            facPhone: this.form.facPhone,
+            facLogo: this.form.facLogo,
+            facState: this.radio
+            }
+            this.$axios({
+              method: 'post',
+              url: 'http://localhost:9090/editFactory',
+              data: param
+            }).then(response=>{
+              this.getList();
+              this.dialogFormVisible=false
+              this.$message({
+                message: response.data.message,
+                type: 'success'
+              });
+            })
           }
-          this.$axios({
-            method: 'post',
-            url: 'http://localhost:9090/addFactory',
-            data: param
-          }).then(response=>{
-            this.$message({
-              message: response.data.message,
-              type: 'success'
-            });
-            this.getList();
-            this.dialogFormVisible=false
-          })
+
         }
       },
 
