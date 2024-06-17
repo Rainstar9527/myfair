@@ -1,4 +1,5 @@
 <template>
+    <el-card class="box-card" id="card">
     <div class="container">
         <el-table :data="facData" id="facTable" :height="height" :row-class-name="tableRowClassName">
             <el-table-column type="selection" width="55">
@@ -20,6 +21,7 @@
             </el-table-column>
         </el-table>
     </div>
+    </el-card>
 
 </template>
 
