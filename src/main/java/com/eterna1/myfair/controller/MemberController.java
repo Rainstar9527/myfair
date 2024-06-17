@@ -1,77 +1,72 @@
 package com.eterna1.myfair.controller;
 
 import com.eterna1.myfair.common.Result;
-import com.eterna1.myfair.service.BuyService;
+import com.eterna1.myfair.service.MemberService;
 import com.eterna1.myfair.utils.PicUpload;
-import com.eterna1.myfair.vo.Buy;
 import com.eterna1.myfair.vo.Factory;
+import com.eterna1.myfair.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class BuyController {
-    @Autowired
-    BuyService buyService;
+public class MemberController {
     @Autowired
     PicUpload picUpload;
+    @Autowired
+    MemberService memberService;
 
-    @RequestMapping("/getAllBuy")
-    public Result selectAllBuy()
-    {
+    @PostMapping("/getAllMember")
+    public Result selectAllMember(){
         Result result = new Result();
-        List<Buy> buys = buyService.selectAllBuy();
-
-        result.setData(buys);
+        List<Member> members = memberService.selectAllMembers();
         result.setFlag(true);
-        result.setMessage("success");
-
+        result.setData(members);
+        result.setMessage("ok");
         return result;
     }
 
-    @RequestMapping("/searchBuy")
+    @RequestMapping("/searchMember")
     public Result searchFactory(@RequestBody Map<String, String> map) {
         Result result = new Result();
         String selection = map.get("selection");
         String inputString = map.get("inputString");
 
-        List<Buy> buys = buyService.searchBuy(selection, inputString);
+        List<Member> members = memberService.searchMembers(selection, inputString);
         result.setFlag(true);
-        result.setData(buys);
+        result.setData(members);
         result.setMessage("ok");
 
         return result;
     }
 
-    @RequestMapping("/addBuy")
-    public Result addBuy(@RequestBody Buy buy){
+    @PostMapping("/removeMember")
+    public Result removeMember(@RequestBody Member member){
         Result result = new Result();
-        buyService.insertSelective(buy);
-        result.setFlag(true);
-        result.setMessage("success");
-        return result;
-    }
-
-    @RequestMapping("/editBuy")
-    public Result editBuy(@RequestBody Buy buy){
-        Result result = new Result();
-        buyService.updateByPrimaryKey(buy);
-        result.setFlag(true);
-        result.setMessage("success");
-        return result;
-    }
-
-    @PostMapping("/removeBuy")
-    public Result removeFactory(@RequestBody Buy buy){
-        Result result = new Result();
-        buyService.deleteByPrimaryKey(buy);
+        memberService.deleteByPrimaryKey(member);
         result.setFlag(true);
         result.setMessage("删除成功");
+        return  result;
+    }
+
+    @PostMapping("/addMember")
+    public Result addMember(@RequestBody Member member){
+        Result result = new Result();
+        memberService.addMember(member);
+        result.setFlag(true);
+        result.setMessage("添加成功");
+        return result;
+    }
+
+    @PostMapping("/editMember")
+    public Result editMember(@RequestBody Member member){
+        Result result = new Result();
+        memberService.editMember(member);
+        result.setFlag(true);
+        result.setMessage("修改成功");
         return result;
     }
 }

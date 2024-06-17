@@ -52,4 +52,9 @@ public class FactoryServiceImpl implements FactoryService {
     public void updateByPrimaryKey(Factory factory) {
         factoryMapper.updateByPrimaryKey(factory);
     }
+
+    @Override
+    public void deleteByPrimaryKey(Factory factory) {
+        factoryMapper.deleteByPrimaryKey(factory.getFacId());
+    }
 }

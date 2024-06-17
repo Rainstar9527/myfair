@@ -16,4 +16,6 @@ public interface FactoryService {
     void insertSelective(Factory factory);
 
     void updateByPrimaryKey(Factory factory);
+
+    void deleteByPrimaryKey(Factory factory);
 }

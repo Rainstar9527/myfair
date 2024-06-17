@@ -138,4 +138,26 @@
       mstate = #{mstate,jdbcType=INTEGER}
     where mid = #{mid,jdbcType=INTEGER}
   </update>
+  <select id="selectAllMembers" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Member">
+    select *
+    from tb_member
+  </select>
+  <select id="searchMemberByName" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Member">
+    select
+    <include refid="Base_Column_List" />
+    from tb_member
+    where mname = #{mname,jdbcType=VARCHAR}
+  </select>
+  <select id="searchMemberByCode" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Member">
+    select
+    <include refid="Base_Column_List" />
+    from tb_member
+    where mcode = #{mcode,jdbcType=VARCHAR}
+  </select>
+  <select id="searchMemberByPhone" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Member">
+    select
+    <include refid="Base_Column_List" />
+    from tb_member
+    where mphone = #{mphone,jdbcType=VARCHAR}
+  </select>
 </mapper>

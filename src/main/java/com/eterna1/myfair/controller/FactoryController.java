@@ -75,4 +75,15 @@ public class FactoryController {
         result.setMessage("success");
         return result;
     }
+
+    @PostMapping("/removeFactory")
+    public Result removeFactory(@RequestBody Factory factory){
+        Result result = new Result();
+
+        factoryService.deleteByPrimaryKey(factory);
+
+        result.setFlag(true);
+        result.setMessage("删除成功");
+        return result;
+    }
 }

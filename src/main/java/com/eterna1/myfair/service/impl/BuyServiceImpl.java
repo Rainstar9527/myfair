@@ -37,4 +37,9 @@ public class BuyServiceImpl implements BuyService {
     public void updateByPrimaryKey(Buy buy) {
         buyMapper.updateByPrimaryKey(buy);
     }
+
+    @Override
+    public void deleteByPrimaryKey(Buy buy) {
+        buyMapper.deleteByPrimaryKey(buy.getBuyId());
+    }
 }
