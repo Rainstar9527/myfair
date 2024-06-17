@@ -8,6 +8,7 @@ import buyer from '../views/buyer.vue'
 import member from '../views/member.vue'
 import factory from '@/views/factory.vue'
 import account from '../views/account.vue'
+import location from '../views/location.vue'
 
 Vue.use(Router)
 
@@ -42,6 +43,11 @@ export default new Router({
           path: '/center/account',
           name: 'account',
           component: account
+        },
+        {
+          path: '/center/location',
+          name: 'location',
+          component: location
         }
       ]
     },
