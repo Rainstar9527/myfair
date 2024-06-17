@@ -7,4 +7,8 @@ import java.util.List;
 public interface LocationService {
 
     List<Location> selectAllLocations();
+
+    List<Location> selectEmptyLocation();
+
+    void updateLocation(Location location);
 }

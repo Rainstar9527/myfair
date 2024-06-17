@@ -18,4 +18,6 @@ public interface LocationMapper {
     int updateByPrimaryKey(Location record);
 
     List<Location> selectAllLocations();
+
+    List<Location> selectEmptyLocation();
 }

@@ -94,4 +94,9 @@
     select *
     from tb_location
   </select>
+  <select id="selectEmptyLocation" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Location">
+    select *
+    from tb_location
+    where fac_id is null
+  </select>
 </mapper>

@@ -17,4 +17,14 @@ public class LocationServiceImpl implements LocationService {
     public List<Location> selectAllLocations() {
         return locationMapper.selectAllLocations();
     }
+
+    @Override
+    public List<Location> selectEmptyLocation() {
+        return locationMapper.selectEmptyLocation();
+    }
+
+    @Override
+    public void updateLocation(Location location) {
+        locationMapper.updateByPrimaryKey(location);
+    }
 }
