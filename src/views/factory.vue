@@ -135,11 +135,11 @@
               size="mini"
               @click="edit(scope.$index, scope.row)">编辑
             </el-button>
-            <!-- <el-button
+            <el-button
               size="mini"
               type="danger"
               @click="remove(scope.$index, scope.row)">删除
-            </el-button> -->
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -286,7 +286,26 @@
           this.form = JSON.parse(JSON.stringify(row));
           this.imageUrl = this.form.facLogo
           this.dialogFormVisible = true
-          this.title="新增厂商数据"
+          this.title="修改厂商数据"
+        },
+
+        remove(index, row){
+          this.reset()
+          this.form = JSON.parse(JSON.stringify(row));
+          var param = {
+            facId: this.form.facId
+          }
+          this.$axios({
+            method: 'post',
+            url: 'http://localhost:9090/removeFactory',
+            data: param
+          }).then(response=>{
+            this.getList();
+            this.$message({
+              message: response.data.message,
+              type: 'success'
+            });
+          })
         },
 
       //提交按钮

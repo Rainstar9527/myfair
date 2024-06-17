@@ -5,7 +5,7 @@ import login from '@/views/login'
 import center from '@/views/center'
 import img from '../views/img.vue'
 import buyer from '../views/buyer.vue'
-
+import member from '../views/member.vue'
 import factory from '@/views/factory.vue'
 
 Vue.use(Router)
@@ -31,6 +31,11 @@ export default new Router({
           path: '/center/buyer',
           name: 'buyer',
           component: buyer
+        },
+        {
+          path: '/center/member',
+          name: 'member',
+          component: member
         }
       ]
     },

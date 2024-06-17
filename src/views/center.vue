@@ -25,6 +25,10 @@
               <i class="el-icon-setting"></i>
               <span slot="title">采购商管理</span>
             </el-menu-item>
+            <el-menu-item index="/center/member">
+              <i class="el-icon-setting"></i>
+              <span slot="title">会员管理</span>
+            </el-menu-item>
         </el-submenu>
         
       </el-menu>
