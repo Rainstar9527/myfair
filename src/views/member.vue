@@ -72,9 +72,7 @@
 
         </el-header>
 
-        <el-table :data="tableData" id="tableData" :height="height" :row-class-name="tableRowClassName">
-            <el-table-column type="selection" width="55">
-            </el-table-column>
+        <el-table :data="tableData" id="tableData" :height="height" >
             <el-table-column property="mid" label="ID" width="50" align="center">
             </el-table-column>
             <el-table-column property="mcode" label="编号" width="100" align="center">
@@ -322,7 +320,6 @@ export default {
                     facBuyId: this.form.facBuyId,
                     mimage: this.imageUrl,
                     mstate: 0
-
                 }
                 this.$axios({
                     method: 'post',

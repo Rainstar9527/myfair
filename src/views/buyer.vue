@@ -55,8 +55,6 @@
     </el-header>
 
     <el-table :data="tableData" id="tableData" :height="height" :row-class-name="tableRowClassName">
-      <el-table-column type="selection" width="55">
-      </el-table-column>
       <el-table-column property="buyId" label="ID" width="50" align="center">
       </el-table-column>
       <el-table-column property="buyName" label="名称" width="250" align="center">
@@ -135,6 +133,7 @@ export default {
         buyDesc: [{ required: true, message: '请输入类型', trigger: 'blur' }],
         buyAddress: [{ required: true, message: '请输入地址', trigger: 'blur' }],
       },
+      height: '200px'
     }
   },
   methods: {

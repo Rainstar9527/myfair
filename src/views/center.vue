@@ -37,6 +37,10 @@
               <i class="el-icon-setting"></i>
               <span slot="title">展销位管理</span>
             </el-menu-item>
+            <el-menu-item index="/center/inout">
+              <i class="el-icon-setting"></i>
+              <span slot="title">出入管理</span>
+            </el-menu-item>
         </el-submenu>
         
       </el-menu>

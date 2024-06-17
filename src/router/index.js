@@ -9,6 +9,7 @@ import member from '../views/member.vue'
 import factory from '@/views/factory.vue'
 import account from '../views/account.vue'
 import location from '../views/location.vue'
+import inout from '../views/inout.vue'
 
 Vue.use(Router)
 
@@ -48,6 +49,11 @@ export default new Router({
           path: '/center/location',
           name: 'location',
           component: location
+        },
+        {
+          path: '/center/inout',
+          name: 'inout',
+          component: inout
         }
       ]
     },

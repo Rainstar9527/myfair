@@ -44,8 +44,6 @@
     </el-header>
 
     <el-table :data="tableData" id="tableData" :height="height" :row-class-name="tableRowClassName">
-      <el-table-column type="selection" width="55">
-      </el-table-column>
       <el-table-column property="aid" label="ID" width="50" align="center">
       </el-table-column>
       <el-table-column property="adminName" label="账户名" width="300" align="center">
@@ -108,6 +106,7 @@ export default {
         adminName: [{ required: true, message: '请输入名称', trigger: 'blur' }],
         adminPwd: [{ required: true, message: '请输入密码', trigger: 'blur' }],
       },
+      height: '200px'
     }
   },
   methods: {
