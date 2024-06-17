@@ -5,7 +5,7 @@
              ref="ruleForm2"
              label-position="left"
              label-width="0px"
-             class="demo-ruleForm login-page">
+             class="login-page">
       <h3 class="title">系统登录</h3>
       <el-form-item prop="username">
         <el-input type="text"
@@ -35,6 +35,7 @@ import url from 'postcss-url';
     name: "login",
     data(){
       return {
+        url: 'D:\workspace-Java\Fair\vuePage\static\images\miku01.jpg',
         logining: false,
         ruleForm2: {
           username: '',
@@ -74,6 +75,8 @@ import url from 'postcss-url';
   .login-container {
     width: 100%;
     height: 100%;
+    background: url('../assets/miku01.jpg');
+    
   }
   .login-page {
     -webkit-border-radius: 5px;
@@ -82,15 +85,21 @@ import url from 'postcss-url';
     padding: 35px 35px 15px;
     background: #fff;
     border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #cac6c6;
     margin: 0;
     position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    box-shadow: 0px 5px 20px black;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #5c5c5c;
+    z-index: 9;/*makes the nav always on the top*/
+    backdrop-filter: blur(10px);/*add blur filter*/
   }
   .title{
     text-align: center;
+    color: black;
   }
 </style>
  

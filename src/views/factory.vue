@@ -1,5 +1,5 @@
 <template>
-    <el-card class="box-card">
+    <el-card class="box-card" id="card">
       <el-header style="display: flex;">
         <!-- 搜索 -->
         <div style="margin: 15px; width: 90%;">
@@ -62,10 +62,10 @@
 
       </el-header>
 
-      <!-- 表格 -->
       <el-table
         :data="tableData"
-        style="width: 100%"
+        id="tableData"
+        :height= "height"
         :row-class-name="tableRowClassName">
         <el-table-column
           type="selection"
@@ -143,6 +143,8 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 表格 -->
+
       <!-- 分页 -->
       <el-row style="margin-top: 20px;">
         <el-pagination
@@ -188,7 +190,10 @@
           pagesize: 10,
           //查
           select: '',
-          input: ''
+          input: '',
+
+          
+          height: '200px'
         }
       },
       methods: {
@@ -332,6 +337,13 @@
             })
           }
 
+        },
+        getHeight(){
+          let num = document.getElementById("card").clientHeight-150
+          this.$nextTick(()=>{
+            this.height = String(num)
+            console.log(this.height)
+          })
         }
       },
 
@@ -339,6 +351,7 @@
 
       mounted() {
         this.getList();
+        this.getHeight();
       }
     }
   </script>
@@ -354,5 +367,11 @@
     .el-table .exit-row {
       background:#FFC1C1;
     }
+
+    .el-card {
+      padding: 0%;
+      height: 99%;
+    }
+
 
   </style>

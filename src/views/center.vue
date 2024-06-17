@@ -26,8 +26,9 @@
               <span slot="title">采购商管理</span>
             </el-menu-item>
         </el-submenu>
+        
       </el-menu>
- 
+      <img src='../assets/miku02.png' style="width: 200px;" v-if="open">
     </el-aside>
     <el-container>
       <el-header>
@@ -50,6 +51,7 @@
     name: "index",
     data() {
       return {
+        url: '../assets/miku02.png',
         openeds: ["1"],
         isCollapse: false, //导航栏默认为展开
         close: false, //第二个图标默认隐藏
@@ -68,7 +70,7 @@
  
 <style scoped>
   .el-header, .el-footer {
-    background-color: #B3C0D1;
+    background-color: #39C5BB;
     color: #333;
     line-height: 60px;
     height: 100%;
@@ -76,14 +78,20 @@
   }
  
   .el-aside {
-    background-color: #D3DCE6;
+    background-color: #ffd8e9;
     color: #333;
     height: 100vh;
   }
  
   .el-main {
+    padding: 20px;
+    position: relative;
     background-color: #E9EEF3;
     color: #333;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/miku01B.jpg');
+    background-size: cover;
   }
  
   body > .el-container {
@@ -93,7 +101,7 @@
   .logo {
     height: 60px;
     line-height: 60px;
-    background-color: antiquewhite;
+    background-color: rgb(255, 120, 190);
     text-align: center;
   }
  
@@ -104,6 +112,11 @@
  
   .el-menu {
     border-right-width: 0;
+    background-color: rgb(255, 175, 207);
+  }
+
+  .el-menu-item{
+    background-color: rgb(255, 175, 207);
   }
  
   .el-menu-vertical:not(.el-menu--collapse) {
@@ -124,7 +137,7 @@
   }
  
   .trigger:hover {
-    background-color: rgb(203, 215, 230);
+    background-color: #39B5CC;
   }
 </style>
  

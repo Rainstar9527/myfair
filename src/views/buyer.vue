@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card">
+  <el-card class="box-card" id="card">
 
     <el-header style="display: flex;">
       <div style="margin: 15px; width: 90%;">
@@ -60,7 +60,8 @@
 
     <el-table
         :data="tableData"
-        style="width: 100%"
+        id="tableData"
+        :height= "height"
         :row-class-name="tableRowClassName">
         <el-table-column
           type="selection"
@@ -304,10 +305,18 @@
             });
           })
         }
+      },
+      getHeight(){
+        let num = document.getElementById("card").clientHeight-150
+        this.$nextTick(()=>{
+          this.height = String(num)
+          console.log(this.height)
+        })
       }
   },
     mounted() {
       this.getList();
+      this.getHeight();
     }
   }
 </script>
@@ -324,5 +333,10 @@
 
   .el-table .exit-row {
     background:#FFC1C1;
+  }
+
+  .el-card {
+    padding: 0%;
+    height: 99%;
   }
 </style>
