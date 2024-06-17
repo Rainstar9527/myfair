@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eterna1.myfair.dao.RecordMapper" >
+  <resultMap id="BaseResultMap" type="com.eterna1.myfair.vo.Record" >
+    <id column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="buyer_id" property="buyerId" jdbcType="INTEGER" />
+    <result column="rec_time" property="recTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="BaseResultMap2" type="com.eterna1.myfair.vo.RecordResult" >
+    <id column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="mcode" property="member.mcode" jdbcType="VARCHAR"/>
+    <result column="mname" property="member.mname" jdbcType="VARCHAR"/>
+    <result column="rec_time" property="recTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    rid, buyer_id, rec_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_record
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_record
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.eterna1.myfair.vo.Record" >
+    insert into tb_record (rid, buyer_id, rec_time
+      )
+    values (#{rid,jdbcType=INTEGER}, #{buyerId,jdbcType=INTEGER}, #{recTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.eterna1.myfair.vo.Record" >
+    insert into tb_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="recTime != null" >
+        rec_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=INTEGER},
+      </if>
+      <if test="recTime != null" >
+        #{recTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eterna1.myfair.vo.Record" >
+    update tb_record
+    <set >
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=INTEGER},
+      </if>
+      <if test="recTime != null" >
+        rec_time = #{recTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eterna1.myfair.vo.Record" >
+    update tb_record
+    set buyer_id = #{buyerId,jdbcType=INTEGER},
+      rec_time = #{recTime,jdbcType=TIMESTAMP}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <select id="selectAllRecord" resultMap="BaseResultMap2" parameterType="java.lang.Object">
+    select r.rid, m.mcode, m.mname, r.rec_time from tb_record r inner join tb_member m on r.buyer_id = m.mid
+    </select>
+</mapper>

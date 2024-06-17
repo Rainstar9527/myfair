@@ -160,4 +160,9 @@
     from tb_member
     where mphone = #{mphone,jdbcType=VARCHAR}
   </select>
+  <select id="selectMemberByCode" resultMap="BaseResultMap" parameterType="com.eterna1.myfair.vo.Member">
+    select *
+    from tb_member
+    where mcode = #{mcode,jdbcType=VARCHAR}
+  </select>
 </mapper>

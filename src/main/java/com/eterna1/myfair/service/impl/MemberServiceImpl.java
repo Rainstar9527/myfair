@@ -46,4 +46,9 @@ public class MemberServiceImpl implements MemberService {
     public void editMember(Member member) {
         memberMapper.updateByPrimaryKey(member);
     }
+
+    @Override
+    public Member selectMemberByCode(String mcode) {
+        return memberMapper.selectMemberByCode(mcode);
+    }
 }

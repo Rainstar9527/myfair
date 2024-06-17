@@ -14,4 +14,6 @@ public interface MemberService {
     void addMember(Member member);
 
     void editMember(Member member);
+
+    Member selectMemberByCode(String mcode);
 }

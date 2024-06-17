@@ -69,4 +69,13 @@ public class MemberController {
         result.setMessage("修改成功");
         return result;
     }
+
+    @PostMapping("/chooseMember")
+    public Result chooseMember(@RequestBody Member member){
+        Result result = new Result();
+        result.setData(memberService.selectMemberByCode(member.getMcode()));
+        result.setFlag(true);
+        result.setMessage("修改成功");
+        return result;
+    }
 }
