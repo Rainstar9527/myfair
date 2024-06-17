@@ -39,26 +39,20 @@
                         </el-form-item>
                         <el-form-item label="公司名称" prop="facBuyId" v-if="this.radio === 0">
                             <el-select v-model="form.facBuyId" placeholder="请选择活动区域">
-                                <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                                <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                    :value="item.value">
                                 </el-option>
                             </el-select>
                         </el-form-item>
 
                         <el-form-item label="公司名称" prop="facBuyId" v-if="this.radio === 1">
                             <el-select v-model="form.facBuyId" placeholder="请选择活动区域">
-                                <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                                <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                    :value="item.value">
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        
+
                         <el-form-item label="上传图片" prop="imageUrl">
                             <el-upload class="upload-demo" action="http://localhost:9090/addImg"
                                 :on-success="handleSuccess" multiple :limit="1" :file-list="fileList">
@@ -70,7 +64,7 @@
                     </el-form>
                     <div slot="footer" class="dialog-footer">
                         <el-button @click="dialogFormVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="submit()">提 交</el-button>
+                        <el-button type="primary" @click="handleSubmit()">提 交</el-button>
                     </div>
                 </el-dialog>
             </el-row>
@@ -166,9 +160,10 @@ export default {
             imageUrl: '',
             radio: 0,
             rules: {
-                buyName: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-                buyDesc: [{ required: true, message: '请输入类型', trigger: 'blur' }],
-                buyAddress: [{ required: true, message: '请输入地址', trigger: 'blur' }],
+                mcode: [{ required: true, message: '请输入编号', trigger: 'blur' }],
+                mname: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+                mphone: [{ required: true, message: '请输入电话', trigger: 'blur' }],
+                mjob: [{ required: true, message: '请输入职位', trigger: 'blur' }],
             },
             height: '200px'
         }
@@ -191,14 +186,6 @@ export default {
             console.log(response.data)
             this.imageUrl = response.data
         },
-        tableRowClassName({ row, rowIndex }) {
-            if (row.buyState === 1) {
-                return 'warning-row';
-            } else if (row.buyState === 2) {
-                return 'exit-row';
-            }
-            return '';
-        },
         getList() {
             this.$axios({
                 method: 'post',
@@ -209,11 +196,11 @@ export default {
                 this.getPageInfo();
             })
         },
-        radioChange:function(val){
+        radioChange: function (val) {
             if (val === 0) this.getFacList();
             else this.getBuyList();
         },
-        getFacList(){
+        getFacList() {
             this.$axios({
                 method: 'post',
                 url: 'http://localhost:9090/getAllFactory',
@@ -221,8 +208,7 @@ export default {
                 this.ComData = response.data.data;
                 this.Comtotal = response.data.data.length;
                 this.options = [];
-                for (let i = 0; i < this.Comtotal; i++)
-                {
+                for (let i = 0; i < this.Comtotal; i++) {
                     var param = {
                         value: this.ComData[i].facId,
                         label: this.ComData[i].facName,
@@ -231,7 +217,7 @@ export default {
                 }
             })
         },
-        getBuyList(){
+        getBuyList() {
             this.$axios({
                 method: 'post',
                 url: 'http://localhost:9090/getAllBuy',
@@ -239,8 +225,7 @@ export default {
                 this.ComData = response.data.data;
                 this.Comtotal = response.data.data.length;
                 this.options = [];
-                for (let i = 0; i < this.Comtotal; i++)
-                {
+                for (let i = 0; i < this.Comtotal; i++) {
                     var param = {
                         value: this.ComData[i].buyId,
                         label: this.ComData[i].buyName,
@@ -304,7 +289,7 @@ export default {
             this.reset()
             this.form = JSON.parse(JSON.stringify(row));
             var param = {
-                buyId: this.form.buyId
+                mid: this.form.mid
             }
             this.$axios({
                 method: 'post',
@@ -318,6 +303,13 @@ export default {
                 });
             })
         },
+        handleSubmit(){
+        this.$refs['form'].validate((valid) => {
+            if(valid){
+            this.submit();
+            }
+        })
+        },
         submit() {
             if (this.form.mid == null) {
                 var param = {
@@ -330,7 +322,7 @@ export default {
                     facBuyId: this.form.facBuyId,
                     mimage: this.imageUrl,
                     mstate: 0
-                    
+
                 }
                 this.$axios({
                     method: 'post',

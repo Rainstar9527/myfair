@@ -55,7 +55,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="submit()">提 交</el-button>
+              <el-button type="primary" @click="handleSubmit()">提 交</el-button>
             </div>
           </el-dialog>
         </el-row>
@@ -305,6 +305,13 @@
               message: response.data.message,
               type: 'success'
             });
+          })
+        },
+        handleSubmit(){
+          this.$refs['form'].validate((valid) => {
+            if(valid){
+              this.submit();
+            }
           })
         },
 

@@ -5,8 +5,8 @@
       <div style="margin: 15px; width: 90%;">
         <el-input placeholder="请输入内容" v-model="input" class="input-with-select">
           <el-select v-model="select" slot="prepend" placeholder="请选择">
-            <el-option label="公司名" value="1"></el-option>
-            <el-option label="公司地址" value="2"></el-option>
+            <el-option label="ID" value="1"></el-option>
+            <el-option label="用户名" value="2"></el-option>
           </el-select>
           <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
         </el-input>
@@ -17,30 +17,19 @@
         <el-dialog :title="title" :visible.sync="dialogFormVisible" width="30%">
           <el-form :model="form" :rules="rules" ref="form">
             <el-form-item label="id:" hidden>
-              <el-input v-model="form.id"></el-input>
+              <el-input v-model="form.aid"></el-input>
             </el-form-item>
-            <el-form-item label="名称:" prop="buyName">
-              <el-input v-model="form.buyName" placeholder="请输入采购商名称" style="width:80%"></el-input>
+            <el-form-item label="名称:" prop="adminName">
+              <el-input v-model="form.adminName" placeholder="请输入管理员名称" style="width:80%"></el-input>
             </el-form-item>
-            <el-form-item label="类型:" prop="buyDesc">
-              <el-input v-model="form.buyDesc" placeholder="请输入采购商描述" style="width:80%"></el-input>
+            <el-form-item label="密码:" prop="adminPwd">
+              <el-input v-model="form.adminPwd" placeholder="请输入管理员密码" style="width:80%"></el-input>
             </el-form-item>
-            <el-form-item label="地址:" prop="buyAddress">
-              <el-input v-model="form.buyAddress" placeholder="请输入采购商地址" style="width:80%"></el-input>
-            </el-form-item>
-            <el-form-item label="上传图片" prop="imageUrl">
-              <el-upload class="upload-demo" action="http://localhost:9090/addImg" :on-success="handleSuccess" multiple
-                :limit="1" :file-list="fileList">
-                <el-button size="small" type="primary">点击上传</el-button>
-              </el-upload>
-              <img v-if="imageUrl !== ''" :src="'http://localhost:9090/' + imageUrl"
-                style="width: 25%; height: 25%; margin-top: 10px">
-            </el-form-item>
-            <el-form-item label="状态:" prop="buyState">
+            <el-form-item label="状态:" prop="adminState">
               <el-radio-group v-model="radio" style="width:80%">
                 <el-radio :label="0">正常</el-radio>
-                <el-radio :label="1">注销</el-radio>
-                <el-radio :label="2">退出</el-radio>
+                <el-radio :label="1">锁定</el-radio>
+                <el-radio :label="2">注销</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-form>
@@ -57,33 +46,18 @@
     <el-table :data="tableData" id="tableData" :height="height" :row-class-name="tableRowClassName">
       <el-table-column type="selection" width="55">
       </el-table-column>
-      <el-table-column property="buyId" label="ID" width="50" align="center">
+      <el-table-column property="aid" label="ID" width="50" align="center">
       </el-table-column>
-      <el-table-column property="buyName" label="名称" width="250" align="center">
+      <el-table-column property="adminName" label="账户名" width="300" align="center">
+      </el-table-column>
+      <el-table-column property="adminPwd" label="密码(已加密)" width="400" align="center">
+      </el-table-column>
+      <el-table-column property="adminState" label="状态" align="center">
 
         <template slot-scope="scope">
-          <el-popover trigger="hover" placement="top" style="width: 100px; height: 100px;">
-            <img v-if="scope.row.buyLogo !== ''" :src="'http://localhost:9090/' + scope.row.buyLogo"
-              style="width: 100%; height: 150px;">
-            <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ scope.row.buyName }}</el-tag>
-            </div>
-          </el-popover>
-        </template>
-
-      </el-table-column>
-      <el-table-column property="buyDesc" label="描述" width="120" align="center">
-      </el-table-column>
-      <el-table-column property="buyLogo" label="logo" width="120" align="center" v-if="false">
-      </el-table-column>
-      <el-table-column property="buyAddress" label="地址" width="250" align="center">
-      </el-table-column>
-      <el-table-column property="buyState" label="状态" align="center">
-
-        <template slot-scope="scope">
-          <p v-if="scope.row.buyState === 0">正常</p>
-          <p v-else-if="scope.row.buyState === 1">注销</p>
-          <p v-else-if="scope.row.buyState === 2">退出</p>
+          <p v-if="scope.row.adminState === 0">正常</p>
+          <p v-else-if="scope.row.adminState === 1">锁定</p>
+          <p v-else-if="scope.row.adminState === 2">注销</p>
         </template>
 
       </el-table-column>
@@ -131,9 +105,8 @@ export default {
       imageUrl: '',
       radio: 0,
       rules: {
-        buyName: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-        buyDesc: [{ required: true, message: '请输入类型', trigger: 'blur' }],
-        buyAddress: [{ required: true, message: '请输入地址', trigger: 'blur' }],
+        adminName: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+        adminPwd: [{ required: true, message: '请输入密码', trigger: 'blur' }],
       },
     }
   },
@@ -156,9 +129,9 @@ export default {
       this.imageUrl = response.data
     },
     tableRowClassName({ row, rowIndex }) {
-      if (row.buyState === 1) {
+      if (row.adminState === 1) {
         return 'warning-row';
-      } else if (row.buyState === 2) {
+      } else if (row.adminState === 2) {
         return 'exit-row';
       }
       return '';
@@ -166,7 +139,7 @@ export default {
     getList() {
       this.$axios({
         method: 'post',
-        url: 'http://localhost:9090/getAllBuy',
+        url: 'http://localhost:9090/getAllAccount',
       }).then(response => {
         this.AllData = response.data.data;
         this.total = response.data.data.length;
@@ -183,11 +156,10 @@ export default {
         if (this.tableData.length === this.pagesize) break;
       }
     },
-
     search() {
       this.$axios({
         method: 'post',
-        url: 'http://localhost:9090/searchBuy',
+        url: 'http://localhost:9090/searchAccount',
         data: {
           selection: this.select,
           inputString: this.input
@@ -201,34 +173,32 @@ export default {
 
     reset() {
       this.form = {
-        id: null,
-        buyName: null,
-        buyDesc: null,
-        buyAddress: null,
-      },
-        this.imageUrl = ''
+        aid: null,
+        adminName: null,
+        adminPwd: null,
+      }
     },
     add() {
       this.reset()
       this.dialogFormVisible = true
-      this.title = "新增厂商数据"
+      this.title = "新增管理员"
     },
     edit(index, row) {
       this.reset()
       this.form = JSON.parse(JSON.stringify(row));
-      this.imageUrl = this.form.buyLogo
+      this.form.adminPwd = null;
       this.dialogFormVisible = true
-      this.title = "修改厂商数据"
+      this.title = "修改管理员数据"
     },
     remove(index, row) {
       this.reset()
       this.form = JSON.parse(JSON.stringify(row));
       var param = {
-        buyId: this.form.buyId
+        aid: this.form.aid
       }
       this.$axios({
         method: 'post',
-        url: 'http://localhost:9090/removeBuy',
+        url: 'http://localhost:9090/removeAccount',
         data: param
       }).then(response => {
         this.getList();
@@ -246,18 +216,16 @@ export default {
       })
     },
     submit() {
-      if (this.form.buyId == null) {
+      if (this.form.aid == null) {
         var param = {
-          buyId: '',
-          buyName: this.form.buyName,
-          buyDesc: this.form.buyDesc,
-          buyAddress: this.form.buyAddress,
-          buyLogo: this.imageUrl,
-          buyState: this.radio
+          aid: '',
+          adminName: this.form.adminName,
+          adminPwd: this.form.adminPwd,
+          adminState: this.radio
         }
         this.$axios({
           method: 'post',
-          url: 'http://localhost:9090/addBuy',
+          url: 'http://localhost:9090/addAccount',
           data: param
         }).then(response => {
           this.getList();
@@ -269,16 +237,14 @@ export default {
         })
       } else {
         var param = {
-          buyId: this.form.buyId,
-          buyName: this.form.buyName,
-          buyDesc: this.form.buyDesc,
-          buyAddress: this.form.buyAddress,
-          buyLogo: this.imageUrl,
-          buyState: this.radio
+          aid: this.form.aid,
+          adminName: this.form.adminName,
+          adminPwd: this.form.adminPwd,
+          adminState: this.radio
         }
         this.$axios({
           method: 'post',
-          url: 'http://localhost:9090/editBuy',
+          url: 'http://localhost:9090/editAccount',
           data: param
         }).then(response => {
           this.getList();

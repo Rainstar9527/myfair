@@ -2,7 +2,7 @@
   <el-container>
     <!-- width的宽度跟collapse一样动态控制 -->
     <el-aside width="collapse">
-      <div class="logo" v-show="open"><h3><i class="el-icon-s-shop"></i>xxx管理系统</h3></div>
+      <div class="logo" v-show="open"><h3><i class="el-icon-s-shop"></i>展销会管理系统</h3></div>
       <div class="logo" v-show="close"><h3><i class="el-icon-s-shop"></i></h3></div>
       <!-- :collapse="isCollapse"  class="el-menu-vertical" 动态控制导航菜单的收起与展开  router：让index作为 path 进行路由跳转 -->
       <el-menu default-active="$route.path"
@@ -29,6 +29,10 @@
               <i class="el-icon-setting"></i>
               <span slot="title">会员管理</span>
             </el-menu-item>
+            <el-menu-item index="/center/account">
+              <i class="el-icon-setting"></i>
+              <span slot="title">账户管理</span>
+            </el-menu-item>
         </el-submenu>
         
       </el-menu>
@@ -45,7 +49,7 @@
       <el-main>
         <router-view></router-view>
       </el-main>
-      <el-footer>https://github.com/Rainstar9527/myfair</el-footer>
+      <el-footer><a href="https://github.com/Rainstar9527/myfair">项目仓库</a></el-footer>
     </el-container>
   </el-container>
 </template>
